@@ -6,6 +6,6 @@ Currently it only writes segments so there is no debugger information and can on
 Currently you also need to manually provide memory alignment and positioning information to the segments since it's not a completed project yet and WIP.
 
 TODO: Add sections.
-TODO: Add automatic memory alignment etc. 
+TODO: Add automatic memory alignment and positioning etc. 
 TODO: Add and test most significant byte order. 
 

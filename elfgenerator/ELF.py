@@ -1,6 +1,6 @@
-from elfgenerator.ELF_Header_Utils import *
-from elfgenerator.ELF_Segment_Utils import *
-from elfgenerator.Binary import Binary
+from ELF_Header_Utils import *
+from ELF_Segment_Utils import *
+from Binary import Binary
 from os import getcwd
 from os.path import join
 
@@ -168,5 +168,5 @@ if __name__ == "__main__":
     #binary = MyELF._generate_file()
     #for index in range(0,4150):
     #    print(index, binary[index])
-    MyELF.write_to_file(join("elfgenerato", "TestELF3"))
+    MyELF.write_to_file("TestELF3")
     

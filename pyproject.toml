@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "ELFGenerator"
+version = "0.0.2"
+description = "A ELF File Generator using Python"
+authors = ["Tim Meiwald <tim.meiwald@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/TimMeiwald/ELFGenerator"
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = {version = "^7.1.2", optional = true}
+coverage = {version = "^6.4.2", optional = true}
+genbadge = {extras = ["coverage"], version = "^1.1.0", optional = true}
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+coverage = "^6.4.2"
+genbadge = "^1.1.0"
+autopep8 = "^1.7.0"
+
+[tool.poetry.extras]
+test = ["pytest", "coverage", "genbadge"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

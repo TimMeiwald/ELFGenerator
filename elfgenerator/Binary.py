@@ -67,7 +67,7 @@ This is larger than the {self.size} bytes specified.""")
     def __repr__(self):
         response = ""
         for i in self.hex_value:
-            response += i + " "
+            response += i[2:] + " "
         return response
 
 if __name__ == "__main__":

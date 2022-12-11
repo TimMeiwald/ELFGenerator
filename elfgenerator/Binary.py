@@ -63,7 +63,13 @@ This is larger than the {self.size} bytes specified.""")
         self.alignment = self.alignment + other.alignment
         self.hex_value = self.hex_value + other.hex_value #Order will depend on endianness
         return self
-        
+    
+    def __repr__(self):
+        response = ""
+        for i in self.hex_value:
+            response += i + " "
+        return response
+
 if __name__ == "__main__":
     x3 = Binary(0,0,0)
     x1 = Binary(0x7F, 1, 1)

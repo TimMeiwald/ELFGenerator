@@ -165,7 +165,7 @@ if __name__ == "__main__":
     #MyELF._generate_file()
     #print(MyELF.e_shoff.binary().hex_value, MyELF.e_shentsize.binary().hex_value)
     #print(MyELF.e_phoff.binary().hex_value, MyELF.e_phnum.binary().hex_value, MyELF.e_phentsize.binary().hex_value)
-    #binary = MyELF._generate_file()
+    binary = MyELF._generate_file()
     #for index in range(0,4150):
     #    print(index, binary[index])
     MyELF.write_to_file("TestELF3")

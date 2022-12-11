@@ -1,5 +1,5 @@
 import enum
-from elfgenerator.Binary import Binary
+from Binary import Binary
 from enum import Enum
 
 class e_type(Enum):

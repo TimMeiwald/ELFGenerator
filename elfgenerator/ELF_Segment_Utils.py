@@ -7,7 +7,7 @@ Elf32_Word 4 4 Unsigned large integer
 unsigned char 1 1 Unsigned small integer
 """
 from enum import Enum
-from elfgenerator.Binary import Binary
+from Binary import Binary
 class p_type(Enum):
     """
     This member tells what kind of segment this array element describes or how to

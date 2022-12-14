@@ -1,6 +1,6 @@
 from elfgenerator.ELF_Header_Utils import *
 from elfgenerator.ELF_Segment_Utils import *
-from Binary import Binary
+from elfgenerator.Binary import Binary
 from os import getcwd
 from os.path import join
 

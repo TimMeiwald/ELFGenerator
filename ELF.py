@@ -156,6 +156,8 @@ if __name__ == "__main__":
     segment_data = Binary("Hello World.\n", 13, 13)
     p_header_text = Segment(1, 0x001000,0x401000,0x401000,0x001000, 0x001000, 0x5, 2**12)
     p_header_data = Segment(1, 0x002000,0x402000,0x402000,0x001000, 0x001000, 0x4, 2**12)
+    print(p_header_data.binary())
+    print(p_header_data.binary())
     #print("header size = ", p_header.binary().size)
     MyELF.add_program_segment([p_header_text.binary(), segment_text])
     MyELF.add_program_segment([p_header_data.binary(), segment_data])
@@ -168,5 +170,5 @@ if __name__ == "__main__":
     #binary = MyELF._generate_file()
     #for index in range(0,4150):
     #    print(index, binary[index])
-    MyELF.write_to_file(join("elfgenerato", "TestELF3"))
+    #MyELF.write_to_file(join("elfgenerato", "TestELF3"))
     

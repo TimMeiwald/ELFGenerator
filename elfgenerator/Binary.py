@@ -6,54 +6,52 @@ from typing import Type
 
 class Binary():
 
-    def __init__(self, value, size, alignment):
-        self.alignment = alignment # Boundary Alignment, aka 4 will align on a 4 byte boundary
-        self.size = size # Size in Bytes
-        if(size != 0):
-            self.value, hex_value = self.__check_value(value)   # Value to be written, keep value for readability prior to binary conversion
-            self.hex_value = self.__add_padding(hex_value)
-        else:
-            self.value = [] # Simply allows null Binary objects to make other code neater e.g in loops adding them
-            self.hex_value = []
+    def __init__(self, value: str | int, size: int, alignment: int, endianness = "little"):
+        """Accepts hex, ascii string or int values, can specify 'little' or 'big' endian with 'little' as default
 
-    def __check_value(self, value):
-        if(type(value) == str):
-            if(len(value) < 1):
-                raise Exception("String input must be at least one char.")
-            hex_value = list(map(hex, map(ord, value))) #Gets a list of hex values of the ord of each char in the string
-            hex_value = hex_value[::-1]
-            if(len(hex_value) > self.size):
-                size = len(hex_value)
-                raise ValueError(f"""Input: '{value}' is {size} bytes of data.  
-This is larger than the {self.size} bytes specified.""")
-            value = list(value)
-            return value, hex_value 
-        elif(type(value) == int):
-            hex_value = hex(value)
-            hex_value = self.__hex_bytes_to_hex_byte_array(hex_value)
-            return [value], hex_value
-        else:
-            raise TypeError(f"Type {value} is not a valid input.")
+        Note that strings create bytes left to right regardless of endiannness, mainly useful for magic numbers and the like. 
+        """
+        self.endianness = endianness
+        self.alignment = alignment
+        self.size = size
+        self.value = []
+        self._check_type(value)
 
-    def __hex_bytes_to_hex_byte_array(self, hex_value):
-        hex_value = hex_value[2:]
-        length = len(hex_value)
-        byte_array = []
-        if(len(hex_value) % 2 == 0):
-            pass
+    def _check_type(self, value):
+        if(type(value) == int):
+            self._handle_int(value)
+        elif(type(value) == str):
+            self._handle_string(value)
+        elif(type(value) == list):
+            for val in value:
+                self._check_type()
         else:
-            hex_value = "0" + hex_value
-        for index in range(0, length, 2):
-            byte_array.append("0x" + hex_value[index:index+2])
-        hex_value = byte_array
-        return hex_value
+            raise ValueError("Invalid type of input.")
 
-    def __add_padding(self, hex_value):
-        bytes_to_pad = self.size - len(hex_value)
-        if(bytes_to_pad != 0):
-            padding = bytes_to_pad*["0x00"]
-            hex_value =  padding + hex_value 
-        return hex_value[::-1]
+    def _handle_int(self, value):
+        self.value = value.to_bytes(self.size, self.endianness)
+        if(len(self.value) > self.size):
+            raise ValueError("Value requires too many bytes to represent")
+
+    def _handle_string(self, value):
+        self.value = bytes(bytearray(value, encoding="ASCII"))
+        if(len(self.value) > self.size):
+            raise ValueError("Value requires too many bytes to represent")
+
+    def __repr__(self):
+        hex_strings = ""
+        for val in self.value:
+            val = hex(val)
+            if(len(val) == 3):
+                val = "0" + val[2]
+            else:
+                val = val[2:]
+            hex_strings += val + " "
+        hex_strings = hex_strings[:-1]
+        return hex_strings
+
+    def binary(self):
+        return self.value
 
     def __add__(self, other):
         if(type(other) != Binary):
@@ -61,21 +59,7 @@ This is larger than the {self.size} bytes specified.""")
         self.size = self.size + other.size
         self.value = self.value + other.value
         self.alignment = self.alignment + other.alignment
-        self.hex_value = self.hex_value + other.hex_value #Order will depend on endianness
         return self
-    
-    def __repr__(self):
-        response = ""
-        for i in self.hex_value:
-            response += i[2:] + " "
-        return response
 
-if __name__ == "__main__":
-    x3 = Binary(0,0,0)
-    x1 = Binary(0x7F, 1, 1)
-    x2 = Binary("ELF", 3, 3)
-    print((x3+x1+x2).hex_value)
-    x = Binary(0x4010000000, 8, 8)
-    print(x.value, x.hex_value)
-    print(0x401000)
-
+    def __len__(self):
+        return len(self.value)

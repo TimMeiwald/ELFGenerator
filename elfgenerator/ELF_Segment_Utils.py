@@ -112,6 +112,7 @@ class p_flags():
     0x1 is Execute
     0x2 is Write
     0x4 is Read
+    0x6 is Read and Write
     You can mix and match. 
     The above are bits essentially so you can do all simultaneously by adding? the numbers
     """
@@ -147,7 +148,6 @@ class p_align():
         return Binary(self.value, size, alignment)
 
 class Segment_32():
-    """WHY"""
     def __init__(self, type, offset, vaddr, paddr, filesz, memsz, flags, align):
         self.p_type = p_type(type)
         self.p_offset = p_offset(offset)
@@ -187,16 +187,14 @@ class Segment():
         for val in segment_vals:
             result += val.binary()
         return result
-        
-
-        
-
-
-
-if __name__ == "__main__":
-    # p_type: 1 is Load
-    # p_offset: 65 is 65 offset from start of file
-    t = Segment(0, 0x1, 0, 0, 0, 0, 0, 0)
-    print(t.p_offset.value)
-
     
+    def __repr__(self):
+        string = f"\np_type = {self.p_type.binary()}\n"
+        string += f"p_flags = {self.p_flags.binary()}\n"
+        string += f"p_offset = {self.p_offset.binary()}\n"
+        string += f"p_vaddr = {self.p_vaddr.binary()}\n"
+        string += f"p_paddr = {self.p_paddr.binary()}\n"
+        string += f"p_filesz = {self.p_filesz.binary()}\n"
+        string += f"p_memsz = {self.p_memsz.binary()}\n"
+        string += f"p_align = {self.p_align.binary()}\n"
+        return string

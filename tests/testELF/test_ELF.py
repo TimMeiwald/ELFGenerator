@@ -36,7 +36,7 @@ def test_ELF_x86_64_prog():
 def test_ELF_x86_64_prog2():
     """ mov rax, 1 ; 1 is write 
         mov rdi, 1
-        mov rsi, 0x402000 ; Memory address of data segment, need to track positions for compiler
+        mov rsi, 0x401000 ; Memory address of data segment, need to track positions for compiler
         mov rdx, 13
         syscall
         mov rax, 60 ; 60 is exit
@@ -46,11 +46,15 @@ def test_ELF_x86_64_prog2():
     prog = 0x48C7C00100000048C7C70100000048C7C66E10400048C7C20D0000000F0548C7C03C00000048C7C7000000000F05
     data = Binary("Hello World.\n", 13, 13)
     prog = Binary(prog, 46, 46, endianness="big") # Big since code was already in correct order. Don't need to invert anything for LSB
-
+    print(prog)
     x = x86_64()
     x.set_entry_point(0x401000 + 64)
     x.add_segment(7, 46, 46, prog)
     x.add_segment(7, 13, 13, data)
+    for header in x.program_header:
+        print("HEADER: ", header)
+    for segment in x.segments:
+        print("SEGMENT: ", segment)
     b = x.generate_executable().binary()
     print(f"Lenght is {len(b)}")
     from os import getcwd

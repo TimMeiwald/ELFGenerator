@@ -189,12 +189,12 @@ class Segment():
         return result
     
     def __repr__(self):
-        string = f"\np_type = {self.p_type.binary()}\n"
-        string += f"p_flags = {self.p_flags.binary()}\n"
-        string += f"p_offset = {self.p_offset.binary()}\n"
-        string += f"p_vaddr = {self.p_vaddr.binary()}\n"
-        string += f"p_paddr = {self.p_paddr.binary()}\n"
-        string += f"p_filesz = {self.p_filesz.binary()}\n"
-        string += f"p_memsz = {self.p_memsz.binary()}\n"
-        string += f"p_align = {self.p_align.binary()}\n"
+        string = f"\np_type = {self.p_type.binary()}    -> {self.p_type.value}\n"
+        string += f"p_flags = {self.p_flags.binary()}   -> {self.p_flags.value}\n"
+        string += f"p_offset = {self.p_offset.binary()} -> {self.p_offset.value}\n"
+        string += f"p_vaddr = {self.p_vaddr.binary()}   -> {self.p_vaddr.value}\n"
+        string += f"p_paddr = {self.p_paddr.binary()}   -> {self.p_paddr.value}\n"
+        string += f"p_filesz = {self.p_filesz.binary()} -> {self.p_filesz.value}\n"
+        string += f"p_memsz = {self.p_memsz.binary()}   -> {self.p_memsz.value}\n"
+        string += f"p_align = {self.p_align.binary()}   -> {self.p_align.value}\n"
         return string

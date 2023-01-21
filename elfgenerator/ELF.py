@@ -152,7 +152,7 @@ class x86_64():
         else:
             last_segment = self.program_header[-1]
 
-            offset = last_segment.p_paddr.value # Since p_paddr is counting up physical addresses.
+            offset = last_segment.p_paddr.value + last_segment.p_filesz.value # Since p_paddr is counting up physical addresses.
             type = 1
             vaddr = last_segment.p_vaddr.value + last_segment.p_memsz.value
             paddr = last_segment.p_paddr.value + last_segment.p_filesz.value

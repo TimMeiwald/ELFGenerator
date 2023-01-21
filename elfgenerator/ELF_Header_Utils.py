@@ -1,4 +1,3 @@
-import enum
 from elfgenerator.Binary import Binary
 from enum import Enum
 
@@ -205,8 +204,3 @@ class e_ident():
     def binary(self):
         return self.EI_MAG + self.EI_MAG_13 + self.EI_CLASS + self.EI_DATA + self.EI_VERSION + self.EI_OSABI + self.EI_ABIVERSION + self.EI_PAD
 
-
-
-if __name__ == "__main__":
-    x = e_ident(EI_CLASS=2, EI_DATA=1, EI_OSABI=0, EI_ABIVERSION=0)
-    print(x.binary().size)

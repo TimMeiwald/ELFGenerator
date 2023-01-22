@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ELFGenerator"
-version = "0.0.9"
+version = "0.0.10"
 description = "A ELF File Generator using Python"
 authors = ["Tim Meiwald <tim.meiwald@gmail.com>"]
 license = "MIT"

@@ -61,4 +61,36 @@ def test_ELF_x86_64_prog2():
     from os.path import join
     with open(join(getcwd(), "tests", "testELF", "TestExecutable2"), "wb") as fp: # Can be used to write it out as a binary file
         fp.write(b)
+
+
+def test_ELF_x86_64_prog3_test_BSS():
+    """ 
+    :   b8 00 00 00 00              mov    eax,0x0
+        5:  89 04 25 00 20 40 00    mov    DWORD PTR ds:0x402000,eax
+        c:  b8 3c 00 00 00          mov    eax,0x3c
+        11: 89 04 25 04 20 40 00    mov    DWORD PTR ds:0x402004,eax
+        18: b8 2a 00 00 00          mov    eax,0x2a
+        1d: 89 04 25 00 20 40 00    mov    DWORD PTR ds:0x402000,eax
+        24: 8b 04 25 04 20 40 00    mov    eax,DWORD PTR ds:0x402004
+        2b: 8b 3c 25 00 20 40 00    mov    edi,DWORD PTR ds:0x402000
+        32: be 5a 00 00 00          mov    esi,0x5a
+        37: 0f 05                   syscall 
+        """
+    prog = 0xB80000000089042595104000B83C00000089042599104000B82A000000890425951040008B0425991040008B3C2595104000BE5A0000000F05   
+    prog = Binary(prog, 57, 57, endianness="big") # Big since code was already in correct order. Don't need to invert anything for LSB
+    print(prog)
+    x = x86_64()
+    x.set_entry_point(0x401000 + 64)
+    x.add_segment(7, 57, 57, prog)
+    x.add_segment(7, 0, 8, None)
+    for header in x.program_header:
+        print("HEADER: ", header)
+    for segment in x.segments:
+        print("SEGMENT: ", segment)
+    b = x.generate_executable().binary()
+    print(f"Lenght is {len(b)}")
+    from os import getcwd
+    from os.path import join
+    with open(join(getcwd(), "tests", "testELF", "TestExecutable3BSS"), "wb") as fp: # Can be used to write it out as a binary file
+        fp.write(b)
     assert 0 == 1

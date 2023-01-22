@@ -105,7 +105,7 @@ class x86_64():
         """Entry point is the virtual address of the code, so usually the TEXT segment"""
         self.e_entry.value = entry_point
 
-    def add_segment(self, flags, size_physical: int, size_virtual: int, code: Binary =None):
+    def add_segment(self, flags: int, size_physical: int, size_virtual: int, code: Binary =None):
         """ p_type This member tells what kind of segment this array element describes or how to
             interpret the array element's information. Type values and their meanings appear
             below.
@@ -130,12 +130,18 @@ class x86_64():
             segments are aligned in memory and in the file. Values 0 and 1 mean that no
             alignment is required. Otherwise, p_align should be a positive, integral power of
             2, and p_addr should equal p_offset, modulo p_align."""
-        if(size_physical == 0 and code == None):
+        print("Size Physical: ", size_physical)
+        print("Size Virtual: ", size_virtual)
+        print("Code: ", code)
+
+        if(size_physical == 0 and code is not None):
             raise Exception("If physical size is not 0 then you must have code to write.")
         else:
-            if(len(code) != size_physical):
+            if(size_physical == 0 and code is None):
+                code = Binary("", 0, 0)
+            elif(len(code) != size_physical):
                 raise Exception("Physical size must be the same length as the Binary passed to it.")
-            if(len(code) != size_virtual):
+            elif(len(code) != size_virtual):
                 raise Exception("Virtual size must be the same length as the Binary passed to it.")
         
         if(len(self.segments) == 0):

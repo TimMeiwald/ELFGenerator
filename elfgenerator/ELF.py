@@ -141,8 +141,8 @@ class x86_64():
                 code = Binary("", 0, 0)
             elif(len(code) != size_physical):
                 raise Exception("Physical size must be the same length as the Binary passed to it.")
-            elif(len(code) != size_virtual):
-                raise Exception("Virtual size must be the same length as the Binary passed to it.")
+            elif(size_physical < size_virtual):
+                raise Exception("Virtual size must be at least as large as the Physical size.")
         
         if(len(self.segments) == 0):
             offset = 64

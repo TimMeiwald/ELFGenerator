@@ -51,7 +51,7 @@ class Binary():
         return hex_strings
 
     def binary(self):
-        return self.value
+        return self.value.copy()
 
     def __add__(self, other):
         if(type(other) != Binary):

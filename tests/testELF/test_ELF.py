@@ -88,9 +88,9 @@ def test_ELF_x86_64_prog3_test_BSS():
     for segment in x.segments:
         print("SEGMENT: ", segment)
     b = x.generate_executable().binary()
+    print(b)
     print(f"Lenght is {len(b)}")
     from os import getcwd
     from os.path import join
     with open(join(getcwd(), "tests", "testELF", "TestExecutable3BSS"), "wb") as fp: # Can be used to write it out as a binary file
         fp.write(b)
-    assert 0 == 1

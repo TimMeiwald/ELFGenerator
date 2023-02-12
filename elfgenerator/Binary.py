@@ -40,7 +40,7 @@ class Binary():
 
     def __repr__(self):
         hex_strings = ""
-        for val in self.value:
+        for val in self.value.copy():
             val = hex(val)
             if(len(val) == 3):
                 val = "0" + val[2]
